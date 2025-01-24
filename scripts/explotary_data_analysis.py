@@ -40,12 +40,20 @@ class ExploratoryDataAnalysis:
         print(self.data.describe())
         print("\n")
 
+    def retrieve_numerical_columns(self):
+        """
+        Extract numerical features from the dataset and return.
+        """
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+
+        return numerical_columns
+
     def distribution_of_numerical_features(self):
         """
         Visualize the distribution of numerical features to identify patterns, skewness, and outliers.
         """
         print("Distribution of Numerical Features:")
-        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        numerical_columns = self.retrieve_numerical_columns()
         for column in numerical_columns:
             sns.histplot(self.data[column], kde=True, bins=30)
             plt.title(f"Distribution of {column}")
@@ -72,7 +80,7 @@ class ExploratoryDataAnalysis:
         Analyze the correlation between numerical features.
         """
         print("Correlation Analysis:")
-        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        numerical_columns = self.retrieve_numerical_columns()
         corr_matrix = self.data[numerical_columns].corr()
         sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm")
         plt.title("Correlation Matrix")
@@ -92,7 +100,7 @@ class ExploratoryDataAnalysis:
         Use box plots to identify outliers in numerical features.
         """
         print("Outlier Detection:")
-        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        numerical_columns = self.retrieve_numerical_columns()
         for column in numerical_columns:
             sns.boxplot(x=self.data[column])
             plt.title(f"Boxplot of {column}")
