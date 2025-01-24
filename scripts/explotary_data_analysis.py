@@ -39,3 +39,16 @@ class ExploratoryDataAnalysis:
         print("Summary Statistics:")
         print(self.data.describe())
         print("\n")
+
+    def distribution_of_numerical_features(self):
+        """
+        Visualize the distribution of numerical features to identify patterns, skewness, and outliers.
+        """
+        print("Distribution of Numerical Features:")
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        for column in numerical_columns:
+            sns.histplot(self.data[column], kde=True, bins=30)
+            plt.title(f"Distribution of {column}")
+            plt.xlabel(column)
+            plt.ylabel("Frequency")
+            plt.show()
