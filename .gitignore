@@ -1,0 +1,66 @@
+# Ignore virtual environments
+venv-credit
+env/
+venv/
+ENV/
+
+# Ignore Python and Jupyter notebook cache files
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Ignore Jupyter Notebook checkpoints, i.e., automatically generated
+notebooks/.ipynb_checkpoints/
+
+# Ignore all plot-related directories in the notebooks folder I created to store diagrams and charts
+notebooks/plots/
+
+# Ignore data
+data/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__/
+
+# Local settings and secrets
+local_settings.py
+*.env
+
+# SQLite database files (if you're using SQLite)
+db.sqlite3
+*.sqlite3
+
+# Media and static files
+/media/
+/static/
+
+# Django migrations
+*/migrations/
+
+# Coverage reports
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Django REST framework test cases
+*.test.py
+
+# IDE and editor-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.iml
+
+# Python virtual environment directories
+virtualenv/
+
+# Ignore versions as they are very large
+model_versions/
