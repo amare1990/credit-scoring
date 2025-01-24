@@ -71,6 +71,31 @@ class FeatureEngineering:
             print("Invalid strategy. Choose 'mean', 'median', 'most_frequent', or 'remove'.")
         print("Missing values handled.")
 
+    def handle_outliers(self, method="iqr", factor=1.5):
+        """
+        Handle outliers in numerical columns using the specified method.
+        :param method: Method to handle outliers ("iqr" or "z_score").
+        :param factor: The multiplier for the IQR to define outlier thresholds (default is 1.5).
+        """
+        print(f"Handling outliers using the {method.upper()} method...")
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+
+        if method == "iqr":
+            for col in numerical_columns:
+                Q1 = self.data[col].quantile(0.25)
+                Q3 = self.data[col].quantile(0.75)
+                IQR = Q3 - Q1
+                lower_bound = Q1 - factor * IQR
+                upper_bound = Q3 + factor * IQR
+                # Filter out outliers
+                self.data = self.data[(self.data[col] >= lower_bound) & (self.data[col] <= upper_bound)]
+        elif method == "z_score":
+            from scipy import stats
+            self.data = self.data[(np.abs(stats.zscore(self.data[numerical_columns])) < factor).all(axis=1)]
+        else:
+            print("Invalid method. Choose 'iqr' or 'z_score'.")
+        print("Outliers handled.")
+
 
     def normalize_or_standardize(self, method="standardize"):
         """
