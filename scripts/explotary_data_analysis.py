@@ -86,3 +86,15 @@ class ExploratoryDataAnalysis:
         missing_values = self.data.isnull().sum()
         print(missing_values[missing_values > 0])
         print("\n")
+
+    def outlier_detection(self):
+        """
+        Use box plots to identify outliers in numerical features.
+        """
+        print("Outlier Detection:")
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        for column in numerical_columns:
+            sns.boxplot(x=self.data[column])
+            plt.title(f"Boxplot of {column}")
+            plt.xlabel(column)
+            plt.show()
