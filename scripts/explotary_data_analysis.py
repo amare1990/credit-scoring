@@ -77,3 +77,12 @@ class ExploratoryDataAnalysis:
         sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm")
         plt.title("Correlation Matrix")
         plt.show()
+
+    def identify_missing_values(self):
+        """
+        Identify missing values in the dataset.
+        """
+        print("Missing Values:")
+        missing_values = self.data.isnull().sum()
+        print(missing_values[missing_values > 0])
+        print("\n")
