@@ -23,3 +23,19 @@ class ExploratoryDataAnalysis:
         print("\nFirst 5 Rows:")
         print(self.data.head())
         print("\n")
+
+    def summary_statistics(self):
+        """
+        Display summary statistics for the numerical columns.
+        """
+        print("Summary Statistics:")
+        print(self.data.describe())
+        print("\n")
+
+    def summary_statistics(self):
+        """
+        Display summary statistics for the numerical columns.
+        """
+        print("Summary Statistics:")
+        print(self.data.describe())
+        print("\n")
