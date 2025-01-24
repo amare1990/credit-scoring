@@ -28,7 +28,7 @@ class FeatureEngineering:
 
     def extract_features(self):
         """
-        Extract date/time-related features from a datetime column.
+        Extract date/time-related features from a TransactionStartTime column.
         """
         print("Extracting features from transaction timestamps...")
         self.data['transaction_hour'] = pd.to_datetime(self.data['TransactionStartTime']).dt.hour
@@ -36,3 +36,22 @@ class FeatureEngineering:
         self.data['transaction_month'] = pd.to_datetime(self.data['TransactionStartTime']).dt.month
         self.data['transaction_year'] = pd.to_datetime(self.data['TransactionStartTime']).dt.year
         print("Features extracted.")
+
+
+    def encode_categorical_variables(self, method="one_hot"):
+        """
+        Encode categorical variables using One-Hot Encoding or Label Encoding.
+        :param method: Encoding method ("one_hot" or "label").
+        """
+        print(f"Encoding categorical variables using {method}...")
+        categorical_columns = self.data.select_dtypes(include=['object', 'category']).columns
+
+        if method == "one_hot":
+            self.data = pd.get_dummies(self.data, columns=categorical_columns, drop_first=True)
+        elif method == "label":
+            le = LabelEncoder()
+            for col in categorical_columns:
+                self.data[col] = le.fit_transform(self.data[col])
+        else:
+            print("Invalid encoding method. Choose 'one_hot' or 'label'.")
+        print("Categorical variables encoded.")
