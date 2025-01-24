@@ -66,3 +66,14 @@ class ExploratoryDataAnalysis:
             plt.ylabel("Count")
             plt.xticks(rotation=45)
             plt.show()
+
+    def correlation_analysis(self):
+        """
+        Analyze the correlation between numerical features.
+        """
+        print("Correlation Analysis:")
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        corr_matrix = self.data[numerical_columns].corr()
+        sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm")
+        plt.title("Correlation Matrix")
+        plt.show()
