@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 
@@ -8,7 +7,7 @@ from scripts.feature_engineering import FeatureEngineering
 
 
 # Exploratory Data Analysis
-if __name__ == "main":
+if __name__ == "__main__":
 
   """
   Exploratory Data Analysis
