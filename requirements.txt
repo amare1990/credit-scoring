@@ -42,6 +42,7 @@ isoduration==20.11.0
 isort==5.13.2
 jedi==0.19.2
 Jinja2==3.1.5
+joblib==1.4.2
 json5==0.10.0
 jsonpointer==3.0.0
 jsonschema==4.23.0
@@ -101,7 +102,8 @@ requests==2.32.3
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rpds-py==0.20.1
-sci_learn==0.1.4
+scikit-learn==1.3.2
+scipy==1.10.1
 seaborn==0.13.2
 Send2Trash==1.8.3
 six==1.17.0
@@ -109,6 +111,7 @@ sniffio==1.3.1
 soupsieve==2.6
 stack-data==0.6.3
 terminado==0.18.1
+threadpoolctl==3.5.0
 tinycss2==1.2.1
 tomli==2.2.1
 tomlkit==0.13.2
