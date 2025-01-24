@@ -25,3 +25,14 @@ class FeatureEngineering:
         self.data['Transaction_Count'] = self.data.groupby('customerId')['Amount'].transform('count')
         self.data['Transaction_StdDev'] = self.data.groupby('customerId')['Amount'].transform('std')
         print("Aggregate features created.")
+
+    def extract_features(self):
+        """
+        Extract date/time-related features from a datetime column.
+        """
+        print("Extracting features from transaction timestamps...")
+        self.data['transaction_hour'] = pd.to_datetime(self.data['TransactionStartTime']).dt.hour
+        self.data['transaction_day'] = pd.to_datetime(self.data['TransactionStartTime']).dt.day
+        self.data['transaction_month'] = pd.to_datetime(self.data['TransactionStartTime']).dt.month
+        self.data['transaction_year'] = pd.to_datetime(self.data['TransactionStartTime']).dt.year
+        print("Features extracted.")
