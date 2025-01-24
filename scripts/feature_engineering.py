@@ -2,17 +2,23 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler, MinMaxScaler
 from sklearn.impute import SimpleImputer
-from xverse.transformer import WOEEncoder  # For Weight of Evidence (WOE) encoding
+# from xverse.transformer import WOEEncoder  # For Weight of Evidence (WOE) encoding
 from sklearn.model_selection import train_test_split
 
 
 class FeatureEngineering:
-    def __init__(self, data_path):
+    def __init__(self, data=None, data_path=None):
         """
         Initialize the Feature Engineering class by loading the dataset.
+        :param data: DataFrame (optional) - If provided, it will be used directly.
         :param data_path: Path to the dataset (CSV file).
         """
-        self.data = pd.read_csv(data_path)
+        if data is not None:
+            self.data = data
+        elif data_path is not None:
+            self.data = pd.read_csv(data_path)
+        else:
+            raise ValueError("Either data or data_path must be provided.")
 
     def create_aggregate_features(self):
         """
@@ -20,10 +26,10 @@ class FeatureEngineering:
         """
         print("Creating aggregate features...")
         # Example aggregate features
-        self.data['Total_Transaction_Amount'] = self.data.groupby('customerId')['Amount'].transform('sum')
-        self.data['Average_Transaction_Amount'] = self.data.groupby('customerId')['Amount'].transform('mean')
-        self.data['Transaction_Count'] = self.data.groupby('customerId')['Amount'].transform('count')
-        self.data['Transaction_StdDev'] = self.data.groupby('customerId')['Amount'].transform('std')
+        self.data['Total_Transaction_Amount'] = self.data.groupby('CustomerId')['Amount'].transform('sum')
+        self.data['Average_Transaction_Amount'] = self.data.groupby('CustomerId')['Amount'].transform('mean')
+        self.data['Transaction_Count'] = self.data.groupby('CustomerId')['Amount'].transform('count')
+        self.data['Transaction_StdDev'] = self.data.groupby('CustomerId')['Amount'].transform('std')
         print("Aggregate features created.")
 
     def extract_features(self):
