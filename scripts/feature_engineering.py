@@ -89,3 +89,12 @@ class FeatureEngineering:
         else:
             print("Invalid method. Choose 'normalize' or 'standardize'.")
         print(f"Numerical features {method}d.")
+
+
+    def save_processed_data(self, output_path):
+        """
+        Save the processed dataset to a CSV file.
+        :param output_path: Path to save the processed dataset.
+        """
+        self.data.to_csv(output_path, index=False)
+        print(f"Processed dataset saved to {output_path}.")
