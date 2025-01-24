@@ -62,20 +62,35 @@ class FeatureEngineering:
             print("Invalid encoding method. Choose 'one_hot' or 'label'.")
         print("Categorical variables encoded.")
 
+
     def handle_missing_values(self, strategy="mean"):
         """
         Handle missing values in the dataset using imputation or removal.
         :param strategy: Imputation strategy ("mean", "median", "mode") or "remove".
         """
         print(f"Handling missing values using {strategy} strategy...")
-        if strategy in ["mean", "median", "most_frequent"]:
+
+        # Handle numerical columns
+        if strategy in ["mean", "median"]:
+            numerical_cols = self.data.select_dtypes(include=["number"]).columns
             imputer = SimpleImputer(strategy=strategy)
-            self.data = pd.DataFrame(imputer.fit_transform(self.data), columns=self.data.columns)
+            self.data[numerical_cols] = imputer.fit_transform(self.data[numerical_cols])
+
+        # Handle categorical columns (mode)
+        elif strategy == "most_frequent":  # Mode for categorical features
+            categorical_cols = self.data.select_dtypes(include=["object", "category"]).columns
+            imputer = SimpleImputer(strategy="most_frequent")
+            self.data[categorical_cols] = imputer.fit_transform(self.data[categorical_cols])
+
+        # Handle "remove" strategy (removes rows with missing values)
         elif strategy == "remove":
             self.data = self.data.dropna()
+
         else:
             print("Invalid strategy. Choose 'mean', 'median', 'most_frequent', or 'remove'.")
+
         print("Missing values handled.")
+
 
     def handle_outliers(self, method="iqr", factor=1.5):
         """
