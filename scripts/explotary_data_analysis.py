@@ -26,7 +26,7 @@ class ExploratoryDataAnalysis:
 
     def summary_statistics(self):
         """
-        Display summary statistics for the numerical columns.
+        Display summary statistics for the columns.
         """
         print("Summary Statistics for numerical features:")
         print(self.data.describe())

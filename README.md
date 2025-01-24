@@ -1,285 +1,122 @@
-<a name="readme-top"></a>
+# Credit Scroring
 
-<!--
-HOW TO USE:
-This is an example of how you may give instructions on setting up your project locally.
+> Credit Scoring is a data science project aimed at developing a robust Credit Scoring Model to evaluate the creditworthiness of potential borrowers. The model leverages data provided by the eCommerce platform and utilizes Python along with a suite of powerful libraries for data analysis, feature engineering, and predictive modeling.
 
-Modify this file to match your project and remove sections that don't apply.
+## Built With
 
-REQUIRED SECTIONS:
-- Table of Contents
-- About the Project
-  - Built With
-  - Live Demo
-- Getting Started
-- Authors
-- Future Features
-- Contributing
-- Show your support
-- Acknowledgements
-- License
+- Major languages used: Python3
+- Libraries: numpy, pandas, matplotlib.pyplot, scikit-learn
+- Tools and Technlogies used: jupyter notebook, Google Colab, Git, GitHub, Gitflow, VS code editor.
 
-After you're finished please remove all the comments and instructions!
--->
+## Demonstration and Website
 
-<div align="center">
+[Deployment link]()
 
-  <img src="murple_logo.png" alt="logo" width="140"  height="auto" />
-  <br/>
+## Getting Started
 
-  <h3><b>Microverse README Template</b></h3>
+You can clone my project and use it freely, then contribute to this project.
 
-</div>
+- Get the local copy, by running `git clone https://github.com/amare1990/credit-scoring.git` command in the directory of your local machine.
+- Go to the repo main directory, run `cd credit-scoring` command
+- Create python environment by running `python3 -m venv venm-name`, where `ven-name` is your python environment you create
+- Activate it by running:
+   - `source venv-name/bin/activate` on linux os command prompt if you use linux os
+   - `myenv\Scripts\activate` on windows os command prompt if you use windows os.
 
-<!-- TABLE OF CONTENTS -->
-
-# 📗 Table of Contents
-
-- [📖 About the Project](#about-project)
-  - [🛠 Built With](#built-with)
-    - [Tech Stack](#tech-stack)
-    - [Key Features](#key-features)
-  - [🚀 Live Demo](#live-demo)
-- [💻 Getting Started](#getting-started)
-  - [Setup](#setup)
-  - [Prerequisites](#prerequisites)
-  - [Install](#install)
-  - [Usage](#usage)
-  - [Run tests](#run-tests)
-  - [Deployment](#triangular_flag_on_post-deployment)
-- [👥 Authors](#authors)
-- [🔭 Future Features](#future-features)
-- [🤝 Contributing](#contributing)
-- [⭐️ Show your support](#support)
-- [🙏 Acknowledgements](#acknowledgements)
-- [❓ FAQ](#faq)
-- [📝 License](#license)
-
-<!-- PROJECT DESCRIPTION -->
-
-# 📖 [your_project_name] <a name="about-project"></a>
-
-> Describe your project in 1 or 2 sentences.
-
-**[your_project__name]** is a...
-
-## 🛠 Built With <a name="built-with"></a>
-
-### Tech Stack <a name="tech-stack"></a>
-
-> Describe the tech stack and include only the relevant sections that apply to your project.
-
-<details>
-  <summary>Client</summary>
-  <ul>
-    <li><a href="https://reactjs.org/">React.js</a></li>
-  </ul>
-</details>
-
-<details>
-  <summary>Server</summary>
-  <ul>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-  </ul>
-</details>
-
-<details>
-<summary>Database</summary>
-  <ul>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
-  </ul>
-</details>
-
-<!-- Features -->
-
-### Key Features <a name="key-features"></a>
-
-> Describe between 1-3 key features of the application.
-
-- **[key_feature_1]**
-- **[key_feature_2]**
-- **[key_feature_3]**
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LIVE DEMO -->
-
-## 🚀 Live Demo <a name="live-demo"></a>
-
-> Add a link to your deployed project.
-
-- [Live Demo Link](https://yourdeployedapplicationlink.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
-## 💻 Getting Started <a name="getting-started"></a>
-
-> Describe how a new developer could make use of your project.
-
-To get a local copy up and running, follow these steps.
+- After that you have to install all the necessary Python libraries and tools by running `pip install -r requirements.txt`
+- To automate the workflow and execute ata time, run the `python main/main.py` from the root directory of the repo or can be used for running the entire pipeline end-to-end without manual intervention.
+- To run this project and to experiment with individual components of the workflow, open `jupyter notebook` command from the main directory of the repo and run it.
 
 ### Prerequisites
 
-In order to run this project you need:
+- You have to install Python (version 3.8.10 minimum), pip, git, vscode.
 
-<!--
-Example command:
+### Dataset
 
-```sh
- gem install rails
-```
- -->
+- `data.csv` is the datset our workflows work on. The dataset has 95662 number of Rows and 16 number of Columns.
 
-### Setup
+### Project Requirements
+- Git, GitHub setup, adding `pylint' in the GitHub workflows
+- Statistical and EDA analysis on the data, ploting
+- Feature Engineering
 
-Clone this repository to your desired folder:
 
-<!--
-Example commands:
+#### GitHub Action and Following Python Coding Styles
+- The `pylint` linters are added in the `.github/workflows` direcory of the repo.
+- Make it to check when Pull request is created
+- Run `pylint scripts/exploratory_data_analysis.py` to check if the code follows the standard format
+- Run `autopep8 --in-place --aggressive --aggressive scripts/exploratory_data_analysis.py` to automatically fix some linters errors
+- Run `pylint scripts/feature_engineering.py` to check if the code follows the standard format
+- Run `autopep8 --in-place --aggressive --aggressive scripts/scripts/feature_engineering.py` to automatically fix some linters errors
 
-```sh
-  cd my-folder
-  git clone git@github.com:myaccount/my-project.git
-```
---->
 
-### Install
+### Exploratory Data Analysis
 
-Install this project with:
+This part of this project conducts Exploraory Data Analysis (EDA) on the dataset to explore the dataset. The functionality is implemented in `exploratory_data_analysis.py` module.
+In this portion of the task, the following analysis has been conducted.
 
-<!--
-Example command:
+- Overviewing data:
+    Number of rows and columns, and their datatypes, printing the first five samples.
+- Data Summary:
+    Summarize statistical descriptive statistics for both numerical features and object type features too.
 
-```sh
-  cd my-project
-  gem install
-```
---->
+- Visualize the distribution of numerical features to identify patterns, skewness, and outliers.
+- Visualize and analyze the distribution of categorical features.
+- Visualize and analyze the correlation between numerical features
+- Identify missing values in the dataset.
+- Use box plots to identify outliers in numerical features.
 
-### Usage
+### Feature Engineering
+- The functionality is implemented in `feature_engineering.py` module.
+- Create aggregate features such as sum, mean, count, and standard deviation for a numerical variable.
+- Extract date/time-related features from a TransactionStartTime column.
+- Encode categorical variables using One-Hot Encoding or Label Encoding based on users' preference.
+- Handle missing values in the dataset using imputation or removal.
+- Handle outliers in numerical columns using the specified method.
+- Normalize or standardize numerical features.
+- Save the processed dataset to a CSV file.
 
-To run the project, execute the following command:
 
-<!--
-Example command:
+### Future Works
+- Calculate the RFMS score for each user
+- Classify users as "good" or "bad" based on their RFMS score
+- Visualize the RFMS score distribution and the threshold boundary.
+- Perform Weight of Evidence (WoE) binning for the target variable.
+- Visualize the WoE values of a feature.
+- Model training, evaluation, selection
+- Hyper-parameter tuning
+- Create Model serving API
 
-```sh
-  rails server
-```
---->
 
-### Run tests
+> #### You can gain more insights by running the jupter notebook and view plots.
 
-To run tests, run the following command:
 
-<!--
-Example command:
+### More information
+- You can refer to [this link]() to gain more insights about the reports of this project results.
 
-```sh
-  bin/rails test test/models/article_test.rb
-```
---->
+## Authors
 
-### Deployment
+👤 **Amare Kassa**
 
-You can deploy this project using:
+- GitHub: [@githubhandle](https://github.com/amare1990)
+- Twitter: [@twitterhandle](https://twitter.com/@amaremek)
+- LinkedIn: [@linkedInHandle](https://www.linkedin.com/in/amaremek/)
 
-<!--
-Example:
-
-```sh
-
-```
- -->
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- AUTHORS -->
-
-## 👥 Authors <a name="authors"></a>
-
-> Mention all of the collaborators of this project.
-
-👤 **Author1**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
-
-👤 **Author2**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- FUTURE FEATURES -->
-
-## 🔭 Future Features <a name="future-features"></a>
-
-> Describe 1 - 3 features you will add to the project.
-
-- [ ] **[new_feature_1]**
-- [ ] **[new_feature_2]**
-- [ ] **[new_feature_3]**
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## 🤝 Contributing <a name="contributing"></a>
+## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues/).
+Feel free to check the [issues page](https://github.com/amare1990/credit-scoring/issues).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Show your support
 
-<!-- SUPPORT -->
+Give a ⭐️ if you like this project, and you are welcome to contribute to this project!
 
-## ⭐️ Show your support <a name="support"></a>
+## Acknowledgments
 
-> Write a message to encourage readers to support your project
+- Hat tip to anyone whose code was referenced to.
+- Thanks to the 10 academy and Kifiya financial instituion that gives me an opportunity to do this project
 
-If you like this project...
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGEMENTS -->
-
-## 🙏 Acknowledgments <a name="acknowledgements"></a>
-
-> Give credit to everyone who inspired your codebase.
-
-I would like to thank...
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- FAQ (optional) -->
-
-## ❓ FAQ <a name="faq"></a>
-
-> Add at least 2 questions new developers would ask when they decide to use your project.
-
-- **[Question_1]**
-
-  - [Answer_1]
-
-- **[Question_2]**
-
-  - [Answer_2]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
-
-## 📝 License <a name="license"></a>
+## 📝 License
 
 This project is [MIT](./LICENSE) licensed.
-
-_NOTE: we recommend using the [MIT license](https://choosealicense.com/licenses/mit/) - you can set it up quickly by [using templates available on GitHub](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository). You can also use [any other license](https://choosealicense.com/licenses/) if you wish._
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
