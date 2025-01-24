@@ -70,3 +70,22 @@ class FeatureEngineering:
         else:
             print("Invalid strategy. Choose 'mean', 'median', 'most_frequent', or 'remove'.")
         print("Missing values handled.")
+
+
+    def normalize_or_standardize(self, method="standardize"):
+        """
+        Normalize or standardize numerical features.
+        :param method: Scaling method ("normalize" or "standardize").
+        """
+        print(f"{method.capitalize()}ing numerical features...")
+        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+
+        if method == "normalize":
+            scaler = MinMaxScaler()
+            self.data[numerical_columns] = scaler.fit_transform(self.data[numerical_columns])
+        elif method == "standardize":
+            scaler = StandardScaler()
+            self.data[numerical_columns] = scaler.fit_transform(self.data[numerical_columns])
+        else:
+            print("Invalid method. Choose 'normalize' or 'standardize'.")
+        print(f"Numerical features {method}d.")
