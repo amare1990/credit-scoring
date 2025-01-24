@@ -26,18 +26,13 @@ class ExploratoryDataAnalysis:
 
     def summary_statistics(self):
         """
-        Display summary statistics for the numerical columns.
+        Display summary statistics for the columns.
         """
-        print("Summary Statistics:")
+        print("Summary Statistics for numerical features:")
         print(self.data.describe())
-        print("\n")
-
-    def summary_statistics(self):
-        """
-        Display summary statistics for the numerical columns.
-        """
-        print("Summary Statistics:")
-        print(self.data.describe())
+        print("\n\n")
+        print("Summary Statistics for categorical features:")
+        print(self.data.describe(include=[object, 'category']))
         print("\n")
 
     def retrieve_numerical_columns(self):
@@ -59,7 +54,7 @@ class ExploratoryDataAnalysis:
             plt.title(f"Distribution of {column}")
             plt.xlabel(column)
             plt.ylabel("Frequency")
-            plt.savefig = plt.savefig(f"plots/numerical_features{column}.png", dpi=300, bbox_inches='tight')
+            plt.savefig(f"plots/numerical_features/{column}.png", dpi=300, bbox_inches='tight')
             plt.show()
 
     def distribution_of_categorical_features(self):
@@ -74,7 +69,7 @@ class ExploratoryDataAnalysis:
             plt.xlabel(column)
             plt.ylabel("Count")
             plt.xticks(rotation=45)
-            plt.savefig = plt.savefig(f"plots/categorical_features{column}.png", dpi=300, bbox_inches='tight')
+            plt.savefig(f"plots/categorical_features/{column}.png", dpi=300, bbox_inches='tight')
             plt.show()
 
     def correlation_analysis(self):
@@ -86,7 +81,7 @@ class ExploratoryDataAnalysis:
         corr_matrix = self.data[numerical_columns].corr()
         sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm")
         plt.title("Correlation Matrix")
-        plt.savefig = plt.savefig(f"plots/heatmap/correlation.png", dpi=300, bbox_inches='tight')
+        plt.savefig(f"plots/heatmap/correlation.png", dpi=300, bbox_inches='tight')
         plt.show()
 
     def identify_missing_values(self):
