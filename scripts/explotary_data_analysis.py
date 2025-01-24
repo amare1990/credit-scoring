@@ -52,3 +52,17 @@ class ExploratoryDataAnalysis:
             plt.xlabel(column)
             plt.ylabel("Frequency")
             plt.show()
+
+    def distribution_of_categorical_features(self):
+        """
+        Analyze the distribution of categorical features.
+        """
+        print("Distribution of Categorical Features:")
+        categorical_columns = self.data.select_dtypes(include=['object', 'category']).columns
+        for column in categorical_columns:
+            sns.countplot(x=self.data[column])
+            plt.title(f"Distribution of {column}")
+            plt.xlabel(column)
+            plt.ylabel("Count")
+            plt.xticks(rotation=45)
+            plt.show()
