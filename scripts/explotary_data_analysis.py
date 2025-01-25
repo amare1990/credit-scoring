@@ -1,9 +1,18 @@
+"""
+A module that conducts basic statistics and exploratory data analysis on data.
+"""
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
+
 
 class ExploratoryDataAnalysis:
+    """
+    A class that encapsulates eda, detecting missing values, detecting outliers.
+    Visualizations of features.
+    Heatmap construction to analyse the relationship between numerical features.
+    """
+
     def __init__(self, data_path):
         """
         Initialize the EDA class by loading the dataset.
@@ -39,13 +48,15 @@ class ExploratoryDataAnalysis:
         """
         Extract numerical features from the dataset and return.
         """
-        numerical_columns = self.data.select_dtypes(include=['float64', 'int64']).columns
+        numerical_columns = self.data.select_dtypes(
+            include=['float64', 'int64']).columns
 
         return numerical_columns
 
     def distribution_of_numerical_features(self):
         """
-        Visualize the distribution of numerical features to identify patterns, skewness, and outliers.
+        Visualize the distribution of numerical features to identify patterns, skewness,
+        and outliers.
         """
         print("Distribution of Numerical Features:")
         numerical_columns = self.retrieve_numerical_columns()
@@ -54,7 +65,10 @@ class ExploratoryDataAnalysis:
             plt.title(f"Distribution of {column}")
             plt.xlabel(column)
             plt.ylabel("Frequency")
-            plt.savefig(f"plots/numerical_features/{column}.png", dpi=300, bbox_inches='tight')
+            plt.savefig(
+                f"plots/numerical_features/{column}.png",
+                dpi=300,
+                bbox_inches='tight')
             plt.show()
 
     def distribution_of_categorical_features(self):
@@ -62,14 +76,18 @@ class ExploratoryDataAnalysis:
         Analyze the distribution of categorical features.
         """
         print("Distribution of Categorical Features:")
-        categorical_columns = self.data.select_dtypes(include=['object', 'category']).columns
+        categorical_columns = self.data.select_dtypes(
+            include=['object', 'category']).columns
         for column in categorical_columns:
             sns.countplot(x=self.data[column])
             plt.title(f"Distribution of {column}")
             plt.xlabel(column)
             plt.ylabel("Count")
             plt.xticks(rotation=45)
-            plt.savefig(f"plots/categorical_features/{column}.png", dpi=300, bbox_inches='tight')
+            plt.savefig(
+                f"plots/categorical_features/{column}.png",
+                dpi=300,
+                bbox_inches='tight')
             plt.show()
 
     def correlation_analysis(self):
@@ -81,7 +99,10 @@ class ExploratoryDataAnalysis:
         corr_matrix = self.data[numerical_columns].corr()
         sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap="coolwarm")
         plt.title("Correlation Matrix")
-        plt.savefig(f"plots/heatmap/correlation.png", dpi=300, bbox_inches='tight')
+        plt.savefig(
+            "plots/heatmap/correlation.png",
+            dpi=300,
+            bbox_inches='tight')
         plt.show()
 
     def identify_missing_values(self):
