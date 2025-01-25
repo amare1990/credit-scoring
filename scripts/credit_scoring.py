@@ -45,4 +45,19 @@ class CreditScoring:
         self.data['Creditworthiness'] = np.where(self.data[rfms_score_col] >= threshold, 'Good', 'Bad')
         print(self.data[['RFMS_Score', 'Creditworthiness']].head())
 
+    def visualize_rfms_distribution(self, rfms_score_col):
+        """
+        Visualize the RFMS score distribution and the threshold boundary.
+        :param rfms_score_col: Column containing the RFMS score.
+        """
+        print("Visualizing RFMS Score Distribution...")
+        plt.figure(figsize=(8, 6))
+        sns.histplot(self.data[rfms_score_col], kde=True, bins=30, color='skyblue')
+        plt.axvline(x=0.5, color='red', linestyle='--', label='Threshold (0.5)')
+        plt.title('RFMS Score Distribution')
+        plt.xlabel('RFMS Score')
+        plt.ylabel('Frequency')
+        plt.legend()
+        plt.show()
+
 
