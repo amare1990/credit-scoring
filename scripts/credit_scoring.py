@@ -74,4 +74,18 @@ class CreditScoring:
         self.data = woe_transformer.fit_transform(self.data, self.data['Target_Binary'])
         print(self.data.head())
 
+    def visualize_woe_binning(self, feature_col):
+        """
+        Visualize the WoE values of a feature.
+        :param feature_col: Feature column to visualize the WoE values for.
+        """
+        print("Visualizing WoE Binning Results...")
+        woe_df = self.data[['bin', 'woe']]  # Ensure the relevant columns are present
+        plt.figure(figsize=(8, 6))
+        sns.barplot(x='bin', y='woe', data=woe_df)
+        plt.title(f'WoE Values for {feature_col} by Bin')
+        plt.xlabel('Bins')
+        plt.ylabel('Weight of Evidence (WoE)')
+        plt.show()
+
 
