@@ -35,4 +35,14 @@ class CreditScoring:
         )
         print(self.data[['Recency_Score', 'Frequency_Score', 'Monetary_Score', 'RFMS_Score']].head())
 
+    def classify_users(self, rfms_score_col, threshold=0.5):
+        """
+        Classify users as "good" or "bad" based on their RFMS score.
+        :param rfms_score_col: Column containing the RFMS score.
+        :param threshold: Threshold to classify users into "good" (>= threshold) and "bad" (< threshold).
+        """
+        print("Classifying Users into Good and Bad...")
+        self.data['Creditworthiness'] = np.where(self.data[rfms_score_col] >= threshold, 'Good', 'Bad')
+        print(self.data[['RFMS_Score', 'Creditworthiness']].head())
+
 
