@@ -60,4 +60,18 @@ class CreditScoring:
         plt.legend()
         plt.show()
 
+    def apply_woe_binning(self, target_col):
+        """
+        Perform Weight of Evidence (WoE) binning for the target variable.
+        :param target_col: Target column for WoE analysis (e.g., 'Creditworthiness').
+        """
+        print("Applying WoE Binning...")
+        # Convert "Good"/"Bad" labels into binary format for WoE calculation
+        self.data['Target_Binary'] = self.data[target_col].apply(lambda x: 1 if x == 'Bad' else 0)
+
+        # Perform WoE binning using xverse
+        woe_transformer = WOE()
+        self.data = woe_transformer.fit_transform(self.data, self.data['Target_Binary'])
+        print(self.data.head())
+
 
