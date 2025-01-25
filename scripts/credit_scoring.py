@@ -12,3 +12,27 @@ class CreditScoring:
         :param data_path: Path to the dataset (CSV file).
         """
         self.data = pd.read_csv(data_path)
+
+    def calculate_rfms(self, recency_col, frequency_col, monetary_col):
+        """
+        Calculate the RFMS score for each user.
+        RFMS Score = Weighted combination of Recency, Frequency, and Monetary values.
+        :param recency_col: Column representing recency (time since last transaction).
+        :param frequency_col: Column representing frequency (number of transactions).
+        :param monetary_col: Column representing monetary value (total transaction amount).
+        """
+        print("Calculating RFMS Score...")
+        # Normalize recency, frequency, and monetary
+        self.data['Recency_Score'] = 1 / (1 + self.data[recency_col])
+        self.data['Frequency_Score'] = self.data[frequency_col] / self.data[frequency_col].max()
+        self.data['Monetary_Score'] = self.data[monetary_col] / self.data[monetary_col].max()
+
+        # Calculate RFMS score as a weighted sum
+        self.data['RFMS_Score'] = (
+            0.4 * self.data['Recency_Score'] +
+            0.3 * self.data['Frequency_Score'] +
+            0.3 * self.data['Monetary_Score']
+        )
+        print(self.data[['Recency_Score', 'Frequency_Score', 'Monetary_Score', 'RFMS_Score']].head())
+
+
