@@ -64,3 +64,4 @@ virtualenv/
 
 # Ignore versions as they are very large
 model_versions/
+exercise/
