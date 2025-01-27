@@ -58,65 +58,56 @@ class FeatureEngineering:
         self.data['transaction_hour'] = pd.to_datetime(
             self.data['TransactionStartTime']).dt.hour
         self.data['transaction_day'] = pd.to_datetime(
-            self.data['TransactionStartTime']).dt.day
+            self.data['TransactionStartTime']).dt.day # day of month
         self.data['transaction_month'] = pd.to_datetime(
             self.data['TransactionStartTime']).dt.month
         self.data['transaction_year'] = pd.to_datetime(
             self.data['TransactionStartTime']).dt.year
+
+        self.data['transaction_day_of_week'] = pd.to_datetime(self.data['TransactionStartTime']).dt.dayofweek
+        self.data['is_weekend'] = self.data['transaction_day_of_week'].apply(lambda x: 1 if x >= 5 else 0)
         print("Features extracted.")
 
-    def encode_categorical_variables(self, method="one_hot"):
-        """
-        Encode categorical variables using One-Hot Encoding or Label Encoding.
-        :param method: Encoding method ("one_hot" or "label").
-        """
-        print(f"Encoding categorical variables using {method}...")
-        categorical_columns = self.data.select_dtypes(
-            include=['object', 'category']).columns
 
-        if method == "one_hot":
-            self.data = pd.get_dummies(
-                self.data, columns=categorical_columns, drop_first=True)
-        elif method == "label":
-            le = LabelEncoder()
-            for col in categorical_columns:
-                self.data[col] = le.fit_transform(self.data[col])
-        else:
-            print("Invalid encoding method. Choose 'one_hot' or 'label'.")
-        print("Categorical variables encoded.")
-
-    def handle_missing_values(self, strategy="mean"):
+    def handle_missing_values(self, strategy="mean", threshold=0.3):
         """
-        Handle missing values in the dataset using imputation or removal.
-        :param strategy: Imputation strategy ("mean", "median", "mode") or "remove".
-        """
-        print(f"Handling missing values using {strategy} strategy...")
+        Handle missing values in the dataset. Features with missing values above the threshold are dropped.
+        Otherwise, missing values are handled using imputation (mean, median, or most_frequent).
 
-        # Handle numerical columns
+        :param strategy: Imputation strategy for features with missing values below the threshold
+                        ("mean", "median", "most_frequent").
+        :param threshold: Proportion of missing values (between 0 and 1) to determine if a feature should be dropped.
+        """
+        print(f"Handling missing values using {strategy} strategy with a threshold of {threshold * 100}%...")
+
+        # Calculate the percentage of missing values for each feature
+        missing_percentage = self.data.isnull().mean()
+
+        # Identify features to drop and features to impute
+        features_to_drop = missing_percentage[missing_percentage > threshold].index
+        features_to_impute = missing_percentage[missing_percentage <= threshold].index
+
+        # Drop features exceeding the threshold
+        self.data = self.data.drop(columns=features_to_drop)
+        print(f"Dropped features: {list(features_to_drop)}")
+
+        # Separate features into numerical and categorical for imputation
+        numerical_cols = self.data.select_dtypes(include=["number"]).columns
+        categorical_cols = self.data.select_dtypes(include=["object", "category"]).columns
+
+        # Handle imputation
         if strategy in ["mean", "median"]:
-            numerical_cols = self.data.select_dtypes(
-                include=["number"]).columns
             imputer = SimpleImputer(strategy=strategy)
-            self.data[numerical_cols] = imputer.fit_transform(
-                self.data[numerical_cols])
-
-        # Handle categorical columns (mode)
-        elif strategy == "most_frequent":  # Mode for categorical features
-            categorical_cols = self.data.select_dtypes(
-                include=["object", "category"]).columns
+            self.data[numerical_cols] = imputer.fit_transform(self.data[numerical_cols])
+        elif strategy == "most_frequent":
             imputer = SimpleImputer(strategy="most_frequent")
-            self.data[categorical_cols] = imputer.fit_transform(
-                self.data[categorical_cols])
-
-        # Handle "remove" strategy (removes rows with missing values)
-        elif strategy == "remove":
-            self.data = self.data.dropna()
-
+            self.data[categorical_cols] = imputer.fit_transform(self.data[categorical_cols])
         else:
-            print(
-                "Invalid strategy. Choose 'mean', 'median', 'most_frequent', or 'remove'.")
+            print("Invalid strategy. Choose 'mean', 'median', or 'most_frequent'.")
 
         print("Missing values handled.")
+
+
 
     def handle_outliers(self, method="iqr", factor=1.5):
         """
@@ -144,6 +135,47 @@ class FeatureEngineering:
         else:
             print("Invalid method. Choose 'iqr' or 'z_score'.")
         print("Outliers handled.")
+
+
+    def encode_categorical_variables(self, method="one_hot"):
+        """
+        Encode categorical variables using One-Hot Encoding or Label Encoding.
+        :param method: Encoding method ("one_hot" or "label").
+        """
+        print(f"Encoding categorical variables using {method}...")
+        # Step 2: Drop unnecessary or high-cardinality features that are unique IDs
+        # self.data.drop(['CustomerId', 'SubscriptionId', 'AccountId',
+        #         'BatchId', 'TransactionId', 'CurrencyCode',
+        #         'TransactionStartTime'], axis=1, inplace=True)
+
+        """
+        Drop TransactionStartTime column and CurrencyCode. Currency code is unique of one
+        and thus doesnot affect the model performance.
+        Since pther date like features have been extracted, TransactionStartTime is unnecessary.
+        """
+        self.data.drop(['TransactionStartTime', 'CurrencyCode'], axis=1, inplace=True)
+
+
+        # Step 4: Encode high-cardinality features using frequency encoding
+        # for col in ['CustomerId', 'SubscriptionId', 'AccountId']:
+        #     self.data[f'{col}_freq'] = self.data[col].map(self.data[col].value_counts())
+
+        # categorical_columns = self.data.select_dtypes(
+        #     include=['object', 'category']).columns
+
+         # Step 3: Encode low-cardinality categorical features
+        categorical_columns = ['ChannelId', 'ProductCategory', 'ProductId', 'ProviderId']
+
+        if method == "one_hot":
+            self.data = pd.get_dummies(
+                self.data, columns=categorical_columns, drop_first=True)
+        elif method == "label":
+            le = LabelEncoder()
+            for col in categorical_columns:
+                self.data[col] = le.fit_transform(self.data[col])
+        else:
+            print("Invalid encoding method. Choose 'one_hot' or 'label'.")
+        print("Categorical variables encoded.")
 
     def normalize_or_standardize(self, method="standardize"):
         """
