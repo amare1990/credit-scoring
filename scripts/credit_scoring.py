@@ -95,7 +95,7 @@ class CreditScoring:
         numeric_vars = train.select_dtypes(include=['float64', 'int64']).columns.difference([target_col] + exclude_cols)
 
         # WoE binning and calculate WoE
-        categorical_vars = train[['ChannelId', 'ProductCategory', 'ProductId', 'ProviderId']]
+        categorical_vars = train.select_dtypes(include=['object', 'category']).columns.difference([target_col] + exclude_cols)
 
         # Initialize binning breaks dictionary
         breaks = {}
