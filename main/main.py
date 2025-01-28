@@ -3,6 +3,7 @@ import pandas as pd
 
 from scripts.explotary_data_analysis import ExploratoryDataAnalysis
 from scripts.feature_engineering import FeatureEngineering
+from scripts.credit_scoring import CreditScoring
 
 
 
@@ -73,6 +74,39 @@ if __name__ == "__main__":
   # Save processed data to a temporary file.
   output_path = "../data/feature_engineered_data.csv"
   feature_eng.save_processed_data(output_path)
+
+
+
+
+  # Running credit scoring methods
+  print('\n\n*************************************************************\n\n')
+  data_path = '../data/feature_engineered_data.csv'
+  cs = CreditScoring(data_path)
+
+  cs.calculate_rfms(
+    recency_col='Recency',
+    frequency_col='Transaction_Count',
+    monetary_col='Total_Transaction_Amount'
+    )
+
+  cs.classify_users(rfms_score_col='RFMS_Score', threshold=0.5)
+
+  # Save credit scored data
+  output_path = '/content/drive/MyDrive/10Academy/week6/credit_scored_data.csv'
+  cs.save_credit_scored_data(output_path)
+
+  # WoE binning without global `exclude_columns` variable
+  # Apply WoE binning
+  bins_adj = cs.apply_woe_binning_monotonic(target_col='Creditworthiness',
+                                        exclude_cols=['TransactionId', 'BatchId',
+                                        'SubscriptionId', 'AccountId', 'CustomerId', 'MostRecentTransaction', 'CountryCode'])
+  # Visualization step
+  feature_to_visualize = 'Recency'
+  if feature_to_visualize in bins_adj:
+     cs.visualize_woe_binning(bins_adj, feature_to_visualize)
+  else:
+     print(f"Feature '{feature_to_visualize}' not found in the bins dictionary.")
+
 
 
 
