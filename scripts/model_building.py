@@ -122,3 +122,12 @@ class ModelPipeline:
         plt.legend()
         plt.show()
 
+
+    def display_results(self):
+        """
+        Display evaluation metrics for all models.
+        """
+        print("Model Evaluation Results:")
+        results_df = pd.DataFrame(self.results).T
+        print(results_df)
+
