@@ -71,3 +71,34 @@ class ModelPipeline:
         grid_search.fit(self.X_train, self.y_train)
         self.models['Tuned Random Forest'] = grid_search.best_estimator_
         print(f"Best parameters for Random Forest: {grid_search.best_params_}")
+
+
+    def evaluate_models(self):
+        """
+        Evaluate models using accuracy, precision, recall, F1 score, and ROC-AUC.
+        """
+        print("Evaluating models...")
+        for model_name, model in self.models.items():
+            y_pred = model.predict(self.X_test)
+            y_pred_proba = model.predict_proba(self.X_test)[:, 1] if hasattr(model, 'predict_proba') else None
+
+            accuracy = accuracy_score(self.y_test, y_pred)
+            precision = precision_score(self.y_test, y_pred, average='binary')
+            recall = recall_score(self.y_test, y_pred, average='binary')
+            f1 = f1_score(self.y_test, y_pred, average='binary')
+            roc_auc = roc_auc_score(self.y_test, y_pred_proba) if y_pred_proba is not None else None
+
+            self.results[model_name] = {
+                'Accuracy': accuracy,
+                'Precision': precision,
+                'Recall': recall,
+                'F1 Score': f1,
+                'ROC-AUC': roc_auc,
+            }
+
+        # Loop through results correctly
+        for model_name, metrics in self.results.items():
+            print(f'Results for {model_name}')
+            for metric, value in metrics.items():
+                print(f'{metric}: {value}')
+
