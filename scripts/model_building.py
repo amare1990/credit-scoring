@@ -2,6 +2,9 @@
 Model training
 """
 
+import os
+import pickle
+
 import pandas as pd
 import numpy as np
 
@@ -104,6 +107,23 @@ class ModelPipeline:
 
 
 
+
+
+    def save_models(self, directory='../data/saved_models'):
+        """
+        Save trained models to disk using pickle.
+        :param directory: Directory to save the models.
+        """
+        print(f"Saving models to '{directory}'...")
+        os.makedirs(directory, exist_ok=True)  # Create directory if it doesn't exist
+        for model_name, model in self.models.items():
+            filepath = os.path.join(directory, f'{model_name.replace(" ", "_")}.pkl')
+            with open(filepath, 'wb') as f:
+                pickle.dump(model, f)  # Save the model using pickle
+            print(f"{model_name} saved at {filepath}")
+
+
+
     def visualize_roc_curve(self):
         """
         Plot the ROC curve for all models.
@@ -130,4 +150,6 @@ class ModelPipeline:
         print("Model Evaluation Results:")
         results_df = pd.DataFrame(self.results).T
         print(results_df)
+
+
 
