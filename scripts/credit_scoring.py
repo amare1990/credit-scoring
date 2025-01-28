@@ -132,7 +132,6 @@ class CreditScoring:
 
 
 
-
     def visualize_woe_binning(self, bins, feature_col):
         """
         Visualize the WoE values of a feature.

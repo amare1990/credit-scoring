@@ -55,3 +55,19 @@ class ModelPipeline:
         for model_name, model in self.models.items():
             print(f"Training {model_name}...")
             model.fit(self.X_train, self.y_train)
+
+    def hyperparameter_tuning(self):
+        """
+        Perform hyperparameter tuning using GridSearchCV for Random Forest.
+        """
+        print("Performing hyperparameter tuning for Random Forest...")
+        rf_model = RandomForestClassifier(random_state=42)
+        param_grid = {
+            'n_estimators': [50, 100, 200],
+            'max_depth': [None, 10, 20, 30],
+            'min_samples_split': [2, 5, 10],
+        }
+        grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, cv=3, scoring='accuracy', n_jobs=-1)
+        grid_search.fit(self.X_train, self.y_train)
+        self.models['Tuned Random Forest'] = grid_search.best_estimator_
+        print(f"Best parameters for Random Forest: {grid_search.best_params_}")
