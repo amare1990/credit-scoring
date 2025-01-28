@@ -40,3 +40,18 @@ class ModelPipeline:
             self.X, self.y, test_size=test_size, random_state=random_state
         )
         print(f"Training set size: {self.X_train.shape[0]}, Testing set size: {self.X_test.shape[0]}")
+
+
+    def train_models(self):
+        """
+        Train Logistic Regression, Decision Tree, Random Forest, and Gradient Boosting models.
+        """
+        print("Training models...")
+        self.models['Logistic Regression'] = LogisticRegression(max_iter=1000, random_state=42)
+        self.models['Decision Tree'] = DecisionTreeClassifier(random_state=42)
+        self.models['Random Forest'] = RandomForestClassifier(random_state=42)
+        self.models['Gradient Boosting'] = GradientBoostingClassifier(random_state=42)
+
+        for model_name, model in self.models.items():
+            print(f"Training {model_name}...")
+            model.fit(self.X_train, self.y_train)
