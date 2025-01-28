@@ -151,3 +151,11 @@ class CreditScoring:
         plt.xlabel('Bins')
         plt.ylabel('Weight of Evidence (WoE)')
         plt.show()
+
+    def save_credit_scored_data(self, output_path):
+      """
+      Save the processed dataset to a CSV file.
+      :param output_path: Path to save the processed dataset.
+      """
+      self.data.to_csv(output_path, index=False)
+      print(f"Processed dataset saved to {output_path}.")
