@@ -102,3 +102,23 @@ class ModelPipeline:
             for metric, value in metrics.items():
                 print(f'{metric}: {value}')
 
+
+
+    def visualize_roc_curve(self):
+        """
+        Plot the ROC curve for all models.
+        """
+        print("Visualizing ROC curves...")
+        plt.figure(figsize=(10, 6))
+        for model_name, model in self.models.items():
+            if hasattr(model, 'predict_proba'):
+                y_pred_proba = model.predict_proba(self.X_test)[:, 1]
+                fpr, tpr, _ = roc_curve(self.y_test, y_pred_proba)
+                plt.plot(fpr, tpr, label=f'{model_name} (AUC = {roc_auc_score(self.y_test, y_pred_proba):.2f})')
+        plt.plot([0, 1], [0, 1], 'k--', label='Random Guess')
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curves')
+        plt.legend()
+        plt.show()
+
