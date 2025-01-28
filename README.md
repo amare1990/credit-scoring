@@ -105,6 +105,12 @@ In this portion of the task, the following analysis has been conducted.
 - Created predictions django app
 - Implemented functionalities for serving saved model apis and able to predict using django restframework
 
+### To Use api and predict
+
+- `cd ml_api`
+- Run `python manage.py runserver` to run the server
+- The API will be live at `http://127.0.0.1:8000/api/predict/`.
+
 
 > #### You can gain more insights by running the jupter notebook and view plots.
 
