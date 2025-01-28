@@ -28,6 +28,10 @@ class ModelPipeline:
         self.target_col = target_col
         self.X = data.drop(columns=[target_col])
         self.y = data[target_col]
+
+        # Convert target variable to numerical (0 and 1)
+        self.y = self.y.map({'Good': 1, 'Bad': 0})
+
         self.models = {}
         self.results = {}
 
@@ -98,12 +102,6 @@ class ModelPipeline:
                 'F1 Score': f1,
                 'ROC-AUC': roc_auc,
             }
-
-        # Loop through results correctly
-        for model_name, metrics in self.results.items():
-            print(f'Results for {model_name}')
-            for metric, value in metrics.items():
-                print(f'{metric}: {value}')
 
 
 
