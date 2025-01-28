@@ -27,3 +27,16 @@ class ModelPipeline:
         self.y = data[target_col]
         self.models = {}
         self.results = {}
+
+
+    def split_data(self, test_size=0.2, random_state=42):
+        """
+        Split the data into training and testing sets.
+        :param test_size: Proportion of the data to use for testing.
+        :param random_state: Random state for reproducibility.
+        """
+        print("Splitting data into training and testing sets...")
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+            self.X, self.y, test_size=test_size, random_state=random_state
+        )
+        print(f"Training set size: {self.X_train.shape[0]}, Testing set size: {self.X_test.shape[0]}")
