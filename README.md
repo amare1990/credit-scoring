@@ -48,6 +48,10 @@ You can clone my project and use it freely, then contribute to this project.
 - Run `autopep8 --in-place --aggressive --aggressive scripts/exploratory_data_analysis.py` to automatically fix some linters errors
 - Run `pylint scripts/feature_engineering.py` to check if the code follows the standard format
 - Run `autopep8 --in-place --aggressive --aggressive scripts/scripts/feature_engineering.py` to automatically fix some linters errors
+- Run `pylint scripts/creadit_scoring.py` to check if the code follows the standard format
+- Run `autopep8 --in-place --aggressive --aggressive scripts/scripts/credit_scoring.py` to automatically fix some linters errors
+- Run `pylint scripts/model_building.py` to check if the code follows the standard format
+- Run `autopep8 --in-place --aggressive --aggressive scripts/scripts/model_building.py` to automatically fix some linters errors
 
 
 ### Exploratory Data Analysis
@@ -76,16 +80,30 @@ In this portion of the task, the following analysis has been conducted.
 - Normalize or standardize numerical features.
 - Save the processed dataset to a CSV file.
 
+### Credit Scoring
 
-### Future Works
+- It is implemented in `credit_scoring.py` script.
+- Each user's RFMS score with its corresponding CustomerId is computed and classified as `Bad` or `Good`.
 - Calculate the RFMS score for each user
 - Classify users as "good" or "bad" based on their RFMS score
 - Visualize the RFMS score distribution and the threshold boundary.
 - Perform Weight of Evidence (WoE) binning for the target variable.
 - Visualize the WoE values of a feature.
-- Model training, evaluation, selection
-- Hyper-parameter tuning
-- Create Model serving API
+
+### Model Training
+
+- It is implemented in `model_building.py` script.
+- Split data into training and testing data
+- Four models: Logistic regression, Decision tree, RandomForest, and Gradient Boosting models are trained and evaluated
+- Hyper-parameter tuning for RandomForest is conducted
+- The ROC curve for all models is done
+- Model performance results are displayed
+- The models built are saved using pickle package
+
+# Model Serving API
+- Created ml_api django project
+- Created predictions django app
+- Implemented functionalities for serving saved model apis and able to predict using django restframework
 
 
 > #### You can gain more insights by running the jupter notebook and view plots.
