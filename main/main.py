@@ -35,43 +35,45 @@ if __name__ == "__main__":
   """
   Feature Engineering
   """
-  # Processing data in chunks
-  chunk_size = 10000  # Define a manageable chunk size
-  chunks = pd.read_csv(data_path, chunksize=chunk_size)
+  # Run feature engineering methods
 
-  # Loop through each chunk
-  for i, chunk in enumerate(chunks):
-      print(f"Processing chunk {i+1}")
+  data_path = '../data/data.csv'
+  feature_eng = FeatureEngineering(data_path=data_path)
 
-      # Pass the chunk directly to the FeatureEngineering class
-      feature_eng = FeatureEngineering(chunk)  # No 'data=' keyword
+  print('\n\n*************************************************************\n\n')
 
-      # Apply feature engineering methods
-      feature_eng.create_aggregate_features()
-      feature_eng.extract_features()
-      feature_eng.encode_categorical_variables(method="one_hot")
-      feature_eng.handle_missing_values(strategy="mean")
-      feature_eng.handle_outliers(method="iqr")
-      feature_eng.normalize_or_standardize(method="standardize")
+  # Apply feature engineering methods
+  feature_eng.create_aggregate_features()
 
-      # Save each processed chunk to a temporary file or append to a combined dataset
-      chunk_output_path = f"../data/processed_chunk_{i+1}.csv"
-      feature_eng.save_processed_data(chunk_output_path)
+  print('\n\n*************************************************************\n\n')
+  feature_eng.calculate_recency()
+  if 'Recency' in feature_eng.data.columns:
+      print("'Recency' column created successfully.")
+      print(feature_eng.data['Recency'].isna().sum())
+  else:
+      print("'Recency' column not found. Check calculate_recency method.")
+  print('\n\n*************************************************************\n\n')
+  feature_eng.extract_features()
 
+  print('\n\n*************************************************************\n\n')
+  feature_eng.handle_missing_values(strategy="mean")  # Default for numerical
+  print('\n\n*************************************************************\n\n')
+  feature_eng.handle_missing_values(strategy="most_frequent")  # For categorical
+  print('\n\n*************************************************************\n\n')
+  feature_eng.handle_outliers(method="iqr", factor=3)
 
-  """
-  Combining each chunked data.
-  """
-  import glob
+  print('\n\n*************************************************************\n\n')
+  feature_eng.encode_categorical_variables(method="one_hot")
 
-  # List all processed chunk files
-  processed_files = glob.glob("../data/processed_chunk_*.csv")
+  print('\n\n*************************************************************\n\n')
+  feature_eng.normalize_or_standardize(method="standardize")
 
-  # Combine them into a single DataFrame
-  combined_data = pd.concat([pd.read_csv(file) for file in processed_files])
+  print('\n\n*************************************************************\n\n')
 
-  # Save the combined data
-  combined_data.to_csv('../data/processed_data_combined.csv', index=False)
+  # Save processed data to a temporary file.
+  output_path = "../data/feature_engineered_data.csv"
+  feature_eng.save_processed_data(output_path)
+
 
 
 
